@@ -44,6 +44,10 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 		return type;
 	}
 
+	protected SqlSessionFactory getSqlSessionFactory() {
+		return sqlSessionFactory;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

@@ -6,28 +6,25 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = 5641303736500902816L;
 
-	private Integer userid;
-
-	private String username;
-
+	private Long userId;
+	private String userName;
 	private String password;
-
 	private String email;
-
-	public Integer getUserid() {
-		return userid;
+		
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -41,10 +38,15 @@ public class User implements Serializable {
 	public String getEmail() {
 		return email;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", email=" + email
+				+ "]";
+	}
 	
 }
