@@ -1,6 +1,6 @@
 package com.greenfoarfece.smb.dao.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
@@ -58,12 +58,11 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 		try {
 			String className = entity.getClass().getSimpleName();
 			String query = className + SUFFIX_MAPPER + "." + PREFIX_INSERT_QUERY + className;
-			status = new Long((long) session.insert(query, entity));
+			status = (long) session.insert(query, entity);
 			session.commit();
 		} catch (PersistenceException pe) {
 			session.rollback();
-			LOG.error("Could not persist the given entity");
-			pe.printStackTrace();
+			LOG.error("Could not persist the given entity", pe);
 		} finally {
 			session.close();
 		}
@@ -73,7 +72,6 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public T find(PK id) {
 		SqlSession session = sqlSessionFactory.openSession();
@@ -81,10 +79,9 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 		try {
 			String className = this.type.getSimpleName();
 			String query = className + SUFFIX_MAPPER + "." + PREFIX_SELECT_QUERY + className;
-			entity = (T) session.selectOne(query, id);
+			entity = session.selectOne(query, id);
 		} catch (PersistenceException pe) {
-			LOG.error("Error occurs while finding the entity");
-			pe.printStackTrace();
+			LOG.error("Error occurs while finding the entity", pe);
 		} finally {
 			session.close();
 		}
@@ -94,18 +91,16 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<T> findAll() {
+	public List<T> findAll() {
 		SqlSession session = sqlSessionFactory.openSession();
-		ArrayList<T> entities = null;
+		List<T> entities = null;
 		try {
 			String className = this.type.getSimpleName();
 			String query = className + SUFFIX_MAPPER + "." + PREFIX_SELECT_QUERY + "All" + className;
-			entities = (ArrayList<T>) session.selectList(query);
+			entities = session.selectList(query);
 		} catch (PersistenceException pe) {
-			LOG.error("Error occurs while populating the entities");
-			pe.printStackTrace();
+			LOG.error("Error occurs while populating the entities", pe);
 		} finally {
 			session.close();
 		}
@@ -122,12 +117,11 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 		try {
 			String className = entity.getClass().getSimpleName();
 			String query = className + SUFFIX_MAPPER + "." + PREFIX_UPDATE_QUERY + className;
-			status = new Long((long) session.update(query, entity));
+			status = (long) session.update(query, entity);
 			session.commit();
 		} catch (PersistenceException pe) {
 			session.rollback();
-			LOG.error("Could not update the given entity");
-			pe.printStackTrace();
+			LOG.error("Could not update the given entity", pe);
 		} finally {
 			session.close();
 		}
@@ -144,12 +138,11 @@ public abstract class CommonDaoImpl<T, PK> implements CommonDao<T, PK> {
 		try {
 			String className = this.type.getSimpleName();
 			String query = className + SUFFIX_MAPPER + "." + PREFIX_DELETE_QUERY + className;
-			status = new Long((long) session.delete(query, id));
+			status = (long) session.delete(query, id);
 			session.commit();
 		} catch (PersistenceException pe) {
 			session.rollback();
-			LOG.error("Could not remove the given entity");
-			pe.printStackTrace();
+			LOG.error("Could not remove the given entity", pe);
 		} finally {
 			session.close();
 		}

@@ -28,10 +28,9 @@ public class PersonDaoImpl extends CommonDaoImpl<Person, Long> implements Person
 		try {
 			String className = getType().getSimpleName();
 			String query = className + SUFFIX_MAPPER + "." + PREFIX_SELECT_QUERY + className + "ByOccupation";
-			entity = (Person) session.selectOne(query, occupation);
+			entity = session.selectOne(query, occupation);
 		} catch (PersistenceException pe) {
-			LOG.error("Error occurs while finding the entity");
-			pe.printStackTrace();
+			LOG.error("Error occurs while finding the entity", pe);
 		} finally {
 			session.close();
 		}

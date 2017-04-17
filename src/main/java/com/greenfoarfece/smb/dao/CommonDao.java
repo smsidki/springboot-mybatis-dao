@@ -1,6 +1,7 @@
 package com.greenfoarfece.smb.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interface contains basic CRUD operation for all entity.
@@ -32,7 +33,7 @@ public interface CommonDao<T, PK> {
 	 * 
 	 * @return {@link ArrayList}&lt;{@link T}&gt; the populated objects or null if the record is empty
 	 */
-	public ArrayList<T> findAll();
+	public List<T> findAll();
 
 	/**
 	 * Method to update existing data on database.
